@@ -1,16 +1,22 @@
-== Hello
+= Spring REST Docs JUnit 5 Sample
+Andy Wilkinson;
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
 
-=== Request
+Sample application demonstrating how to use Spring REST Docs with JUnit 5.
 
-CURL:
-include::{snippets}/hello/curl-request.adoc[]
+`SampleJUnit5ApplicationTests` makes a call to a very simple service and produces three
+documentation snippets.
 
-Request Parameters:
-include::{snippets}/hello/http-request.adoc[]
+One showing how to make a request using cURL:
 
-Request HTTP Example:
-include::{snippets}/hello/http-request.adoc[]
+include::{snippets}/sample/curl-request.adoc[]
 
-=== Response
-Response:
-include::{snippets}/hello/http-response.adoc[]
+One showing the HTTP request:
+
+include::{snippets}/sample/http-request.adoc[]
+
+And one showing the HTTP response:
+
+include::{snippets}/sample/http-response.adoc[]

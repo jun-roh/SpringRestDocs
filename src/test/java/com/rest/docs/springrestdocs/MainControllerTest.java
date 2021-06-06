@@ -9,7 +9,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
@@ -18,33 +20,36 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+@SpringBootTest
 @AutoConfigureRestDocs
 @ExtendWith({ RestDocumentationExtension.class, SpringExtension.class })
 public class MainControllerTest {
 
+    @Autowired
+    private WebApplicationContext context;
+
     private MockMvc mockMvc;
 
     @BeforeEach
-    public void setUp(WebApplicationContext webApplicationContext, RestDocumentationContextProvider restDocumentation) {
+    public void setUp(RestDocumentationContextProvider restDocumentation) {
         this.mockMvc = MockMvcBuilders
-                .webAppContextSetup(webApplicationContext)
+                .webAppContextSetup(context)
                 .apply(documentationConfiguration(restDocumentation))
                 .build();
     }
 
     @Test
     public void Hello_Test() throws Exception {
-
-        // given
         String name = "jun";
-
-        // when
-        mockMvc.perform(get("/hello/" + name)
-                .characterEncoding("utf-8")
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())  // then
-                .andExpect(jsonPath("$.name").value(name))
-                .andDo(document("hello"));
+//        mockMvc.perform(get("/hello/" + name)
+//                .characterEncoding("utf-8")
+//                .accept(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$.name").value(name))
+//                .andDo(document("hello"));
+        this.mockMvc.perform(get("/hello/" + name))
+                .andExpect(status().isOk())
+                .andDo(document("sample"));
     }
 
 }
